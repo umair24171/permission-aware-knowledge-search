@@ -1,0 +1,64 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> buildzn-permission-aware-knowledge-search@0.1.0 eval
+> node --import tsx src/eval-cli.ts
+
+{
+  "data": "synthetic",
+  "embedding": "64-dimensional hash token baseline",
+  "queries": 5,
+  "recallAt3": 1,
+  "mrr": 1,
+  "details": [
+    {
+      "user": "bob",
+      "query": "deployment rollback release",
+      "relevant": "deploy",
+      "rank": 1,
+      "returned": [
+        "deploy",
+        "leave-policy"
+      ]
+    },
+    {
+      "user": "carol",
+      "query": "refund policy orders",
+      "relevant": "refund-policy",
+      "rank": 1,
+      "returned": [
+        "refund-policy"
+      ]
+    },
+    {
+      "user": "alice",
+      "query": "leave vacation holiday",
+      "relevant": "leave-policy",
+      "rank": 1,
+      "returned": [
+        "leave-policy",
+        "deploy",
+        "restricted"
+      ]
+    },
+    {
+      "user": "outsider",
+      "query": "partner onboarding checklist",
+      "relevant": "link-only",
+      "tokens": "synthetic capability provided",
+      "rank": 1,
+      "returned": [
+        "link-only"
+      ]
+    },
+    {
+      "user": "bob",
+      "query": "annual leave travel",
+      "relevant": "leave-policy",
+      "rank": 1,
+      "returned": [
+        "leave-policy",
+        "deploy"
+      ]
+    }
+  ]
+}

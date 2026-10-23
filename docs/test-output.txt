@@ -1,0 +1,39 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> buildzn-permission-aware-knowledge-search@0.1.0 test
+> node --import tsx --test --test-concurrency=1 tests/*.test.ts
+
+{"leakPairs":1728,"unauthorizedChunks":0,"data":"synthetic"}
+{"recallAt3":1,"mrr":1}
+✔ 01 group removal revokes access without reindex (1102.492877ms)
+✔ 02 deleted document hidden immediately (74.635318ms)
+✔ 02 deleted ancestor hides descendants (70.068756ms)
+✔ 02 move document inherits new folder access (69.877266ms)
+✔ 03 link capability required, guessed capability denied and valid capability works (93.569109ms)
+✔ 04 nested inheritance grants access at two folder levels (50.328853ms)
+✔ 04 inheritance boundary cuts parent grants (50.665467ms)
+✔ 05 no access returns empty chunks without calling provider (39.000219ms)
+✔ 06 near duplicate permission sets do not leak private appendix (52.66166ms)
+✔ 07 direct grant revoked after indexing (40.795599ms)
+✔ 07 link revoked after indexing (38.195905ms)
+✔ 08 prompt injection cannot change authenticated principal or SQL predicate (36.482599ms)
+✔ 09 SQL injection in user/query has no authority (41.321282ms)
+✔ 09 invalid limit 0 rejected (36.718084ms)
+✔ 09 invalid limit -1 rejected (33.107454ms)
+✔ 09 invalid limit 21 rejected (30.920202ms)
+✔ 09 invalid limit 1.5 rejected (32.877447ms)
+✔ 09 invalid limit NaN rejected (35.113573ms)
+✔ 09 cyclic and cross-connector moves rejected (40.342104ms)
+✔ 10 source version change hides stale index until reindex (41.951063ms)
+✔ 10 deleted ancestor denies descendants beyond inheritance boundary (42.383355ms)
+✔ 11 Cartesian leak suite checks 1728 user/query pairs across ACL changes (2807.029205ms)
+✔ 12 retrieval quality eval uses accessible topical labels (43.90382ms)
+✔ unit hash embeddings deterministic and nonzero (31.399896ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5296.794616

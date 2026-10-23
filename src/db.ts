@@ -8,7 +8,7 @@ export async function connect():Promise<Database> {
   return {...wrap(pool),tx:async(fn)=>{const c=await pool.connect();try{await c.query('BEGIN');const v=await fn(wrap(c));await c.query('COMMIT');return v;}catch(e){await c.query('ROLLBACK');throw e;}finally{c.release();}},close:()=>pool.end()};
  }
  if(process.env.TEST_PGLITE!=='1')throw new Error('Set DATABASE_URL; TEST_PGLITE=1 is supplemental testing only');
- const {PGlite}=await import('@electric-sql/pglite'); const {vector}=await import('@electric-sql/pglite/vector'); const p=new PGlite(process.env.PGLITE_PATH,{extensions:{vector}});
+ const {PGlite}=await import('@electric-sql/pglite'); const {vector}=await import('@electric-sql/pglite/vector'); const p=new PGlite({dataDir:process.env.PGLITE_PATH,extensions:{vector}});
  const wrap=(c:any):Query=>({query:async(sql,args)=>(await c.query(sql,args)).rows});
  return {...wrap(p),tx:fn=>p.transaction(c=>fn(wrap(c))),close:()=>p.close()};
 }
