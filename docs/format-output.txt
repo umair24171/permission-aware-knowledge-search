@@ -1,23 +1,26 @@
-src/connectors.ts 92ms
-src/db.ts 14ms
-src/demo.ts 6ms
-src/embedding.ts 6ms
-src/eval-cli.ts 2ms
-src/eval.ts 6ms
-src/fixtures.ts 5ms
-src/provider.ts 11ms
-src/schema.ts 2ms
-src/search.ts 4ms
-tests/search.test.ts 24ms
-scripts/scan.mjs 27ms
-package-lock.json 9ms (unchanged)
+src/connectors.ts 78ms (unchanged)
+src/db.ts 15ms (unchanged)
+src/demo.ts 4ms (unchanged)
+src/embedding.ts 6ms (unchanged)
+src/eval-cli.ts 3ms (unchanged)
+src/eval.ts 8ms (unchanged)
+src/fixtures.ts 5ms (unchanged)
+src/provider.ts 8ms (unchanged)
+src/schema.ts 2ms (unchanged)
+src/search.ts 4ms (unchanged)
+tests/search.test.ts 23ms (unchanged)
+scripts/scan.mjs 23ms (unchanged)
+package-lock.json 7ms (unchanged)
 package.json 1ms (unchanged)
-tsconfig.json 1ms
-docker-compose.yml 21ms (unchanged)
-.github/workflows/ci.yml 5ms
-PROGRESS.md 22ms (unchanged)
-README.md 10ms
+tsconfig.json 1ms (unchanged)
+docker-compose.yml 16ms (unchanged)
+.github/workflows/ci.yml 5ms (unchanged)
+PROGRESS.md 17ms (unchanged)
+README.md 10ms (unchanged)
+REPORT.md 6ms (unchanged)
 docs/ASSUMPTIONS.md 4ms (unchanged)
 docs/BLOCKERS.md 4ms (unchanged)
 docs/demo-output.md 1ms (unchanged)
-docs/PLAN.md 5ms
+docs/PLAN.md 8ms (unchanged)
+docs/PUBLISHING.md 3ms (unchanged)
+docs/TEST-REPORT.md 10ms
