@@ -1,1 +1,12 @@
-import {connect} from './db.js';import {migrate} from './schema.js';import {fixtures} from './fixtures.js';import {quality} from './eval.js';const db=await connect();try{await migrate(db);await fixtures(db);console.log(JSON.stringify(await quality(db),null,2));}finally{await db.close();}
+import { connect } from "./db.js";
+import { migrate } from "./schema.js";
+import { fixtures } from "./fixtures.js";
+import { quality } from "./eval.js";
+const db = await connect();
+try {
+  await migrate(db);
+  await fixtures(db);
+  console.log(JSON.stringify(await quality(db), null, 2));
+} finally {
+  await db.close();
+}

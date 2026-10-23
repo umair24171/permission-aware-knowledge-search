@@ -1,15 +1,19 @@
 # Permission aware knowledge search plan
 
 ## Scope
+
 Mock Drive, Slack and Notion connectors supply indexed synthetic documents plus live source metadata, ancestor relationships, grants, group membership and revocable link capabilities. Retrieval applies the full permission predicate inside PostgreSQL before ranking and LIMIT. Local hash embeddings use pgvector; answers see only permitted chunks.
 
 ## Data model
+
 Source nodes (connector, parent, inheritance, active, content version, link sharing), source ACL grants, live group membership, hashed link capabilities, indexed document chunks and vectors tied to source content versions. Current ACL metadata is distinct from the content index.
 
 ## Tools
+
 TypeScript, pg, PostgreSQL with pgvector, PGlite vector extension for supplemental host tests, mock connectors, deterministic hash embedding, mock and Claude answer provider, Node tests, Cartesian leak suite and retrieval quality eval, Docker and Actions.
 
 ## Written edge cases, each with named tests
+
 1. Group membership removal immediately revokes indexed access.
 2. Deleted document or ancestor hides all chunks; moved nodes inherit new permissions.
 3. Link-shared document requires its revocable capability; guessed or missing link denied.

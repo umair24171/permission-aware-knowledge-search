@@ -1,2 +1,48 @@
-import type {Database} from './db.js';import {KnowledgeSearch} from './search.js';import {MockProvider} from './provider.js';import {capability} from './fixtures.js';
-export async function quality(db:Database){const s=new KnowledgeSearch(db,new MockProvider());const labels=[{user:'bob',query:'deployment rollback release',relevant:'deploy'},{user:'carol',query:'refund policy orders',relevant:'refund-policy'},{user:'alice',query:'leave vacation holiday',relevant:'leave-policy'},{user:'outsider',query:'partner onboarding checklist',relevant:'link-only',tokens:[capability]},{user:'bob',query:'annual leave travel',relevant:'leave-policy'}];let hits=0,rr=0;const details=[];for(const l of labels){const rows=await s.retrieve(l.user,l.query,3,l.tokens);const rank=rows.findIndex(r=>r.node===l.relevant)+1;if(rank>0){hits++;rr+=1/rank;}details.push({...l,tokens:l.tokens?'synthetic capability provided':undefined,rank,returned:rows.map(r=>r.node)});}return {data:'synthetic',embedding:'64-dimensional hash token baseline',queries:labels.length,recallAt3:hits/labels.length,mrr:rr/labels.length,details};}
+import type { Database } from "./db.js";
+import { KnowledgeSearch } from "./search.js";
+import { MockProvider } from "./provider.js";
+import { capability } from "./fixtures.js";
+export async function quality(db: Database) {
+  const s = new KnowledgeSearch(db, new MockProvider());
+  const labels = [
+    { user: "bob", query: "deployment rollback release", relevant: "deploy" },
+    { user: "carol", query: "refund policy orders", relevant: "refund-policy" },
+    {
+      user: "alice",
+      query: "leave vacation holiday",
+      relevant: "leave-policy",
+    },
+    {
+      user: "outsider",
+      query: "partner onboarding checklist",
+      relevant: "link-only",
+      tokens: [capability],
+    },
+    { user: "bob", query: "annual leave travel", relevant: "leave-policy" },
+  ];
+  let hits = 0,
+    rr = 0;
+  const details = [];
+  for (const l of labels) {
+    const rows = await s.retrieve(l.user, l.query, 3, l.tokens);
+    const rank = rows.findIndex((r) => r.node === l.relevant) + 1;
+    if (rank > 0) {
+      hits++;
+      rr += 1 / rank;
+    }
+    details.push({
+      ...l,
+      tokens: l.tokens ? "synthetic capability provided" : undefined,
+      rank,
+      returned: rows.map((r) => r.node),
+    });
+  }
+  return {
+    data: "synthetic",
+    embedding: "64-dimensional hash token baseline",
+    queries: labels.length,
+    recallAt3: hits / labels.length,
+    mrr: rr / labels.length,
+    details,
+  };
+}
