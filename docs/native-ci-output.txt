@@ -1,0 +1,705 @@
+﻿2026-10-23T22:00:38.3567747Z Current runner version: '2.338.0'
+2026-10-23T22:00:38.3584559Z ##[group]Runner Image Provisioner
+2026-10-23T22:00:38.3585090Z Hosted Compute Agent
+2026-10-23T22:00:38.3585526Z Version: 20261012.601
+2026-10-23T22:00:38.3586080Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-23T22:00:38.3586552Z Build Date: 2026-10-12T17:48:21Z
+2026-10-23T22:00:38.3587022Z Worker ID: {ef617b85-1a37-4ec5-b35b-bef1c8fc9ebb}
+2026-10-23T22:00:38.3587455Z Region: westus3
+2026-10-23T22:00:38.3587836Z Cloud: Azure
+2026-10-23T22:00:38.3588178Z ##[endgroup]
+2026-10-23T22:00:38.3589305Z ##[group]Operating System
+2026-10-23T22:00:38.3589696Z Ubuntu
+2026-10-23T22:00:38.3590018Z 26.04.1
+2026-10-23T22:00:38.3590374Z LTS
+2026-10-23T22:00:38.3590697Z ##[endgroup]
+2026-10-23T22:00:38.3591059Z ##[group]Runner Image
+2026-10-23T22:00:38.3591470Z Image: ubuntu-26.04
+2026-10-23T22:00:38.3591827Z Version: 20261012.163.1
+2026-10-23T22:00:38.3592645Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261012.163/images/ubuntu/Ubuntu2604-Readme.md
+2026-10-23T22:00:38.3593564Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261012.163
+2026-10-23T22:00:38.3594178Z ##[endgroup]
+2026-10-23T22:00:38.3594902Z ##[group]GITHUB_TOKEN Permissions
+2026-10-23T22:00:38.3596477Z Contents: read
+2026-10-23T22:00:38.3596845Z Metadata: read
+2026-10-23T22:00:38.3597313Z Packages: read
+2026-10-23T22:00:38.3597663Z ##[endgroup]
+2026-10-23T22:00:38.3598987Z Secret source: Actions
+2026-10-23T22:00:38.3599588Z Cache mode: write
+2026-10-23T22:00:38.3600188Z Prepare workflow directory
+2026-10-23T22:00:38.3874488Z Prepare all required actions
+2026-10-23T22:00:38.3906080Z Getting action download info
+2026-10-23T22:00:38.6671415Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-23T22:00:38.7651073Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-23T22:00:38.9149798Z Complete job name: verify
+2026-10-23T22:00:38.9546043Z ##[group]Checking docker version
+2026-10-23T22:00:38.9554230Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2026-10-23T22:00:39.0572347Z '1.54'
+2026-10-23T22:00:39.0590345Z Docker daemon API version: '1.54'
+2026-10-23T22:00:39.0590798Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2026-10-23T22:00:39.0738050Z '1.54'
+2026-10-23T22:00:39.0751728Z Docker client API version: '1.54'
+2026-10-23T22:00:39.0755081Z ##[endgroup]
+2026-10-23T22:00:39.0756731Z ##[group]Clean up resources from previous jobs
+2026-10-23T22:00:39.0760319Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=da37df"
+2026-10-23T22:00:39.0881053Z ##[command]/usr/bin/docker network prune --force --filter "label=da37df"
+2026-10-23T22:00:39.0993446Z ##[endgroup]
+2026-10-23T22:00:39.0993753Z ##[group]Create local container network
+2026-10-23T22:00:39.1000268Z ##[command]/usr/bin/docker network create --label da37df github_network_5a8dff0df2ec4b6c848e3ac5498fa685
+2026-10-23T22:00:39.1362445Z 7fcdc00e385514f45636c05f0c0fe44618e109563b66b0831958b9f77685e72e
+2026-10-23T22:00:39.1382288Z ##[endgroup]
+2026-10-23T22:00:39.1400508Z ##[group]Starting postgres service container
+2026-10-23T22:00:39.1414962Z ##[command]/usr/bin/docker pull pgvector/pgvector:pg16
+2026-10-23T22:00:39.8373268Z pg16: Pulling from pgvector/pgvector
+2026-10-23T22:00:40.0759376Z f2455d5db1ca: Pulling fs layer
+2026-10-23T22:00:40.0760357Z 1a60cdc4b8b6: Pulling fs layer
+2026-10-23T22:00:40.0761036Z 2dd9b1a67dcf: Pulling fs layer
+2026-10-23T22:00:40.0761719Z 00ea30b13a58: Pulling fs layer
+2026-10-23T22:00:40.0762381Z 2ede25b7c579: Pulling fs layer
+2026-10-23T22:00:40.0763048Z 50a212ffc5a1: Pulling fs layer
+2026-10-23T22:00:40.0763702Z e0d7eb465374: Pulling fs layer
+2026-10-23T22:00:40.0764368Z e9cc823db10f: Pulling fs layer
+2026-10-23T22:00:40.0765019Z 003442b28249: Pulling fs layer
+2026-10-23T22:00:40.0765669Z 774043ccc8cc: Pulling fs layer
+2026-10-23T22:00:40.0766522Z 3e13d544cd35: Pulling fs layer
+2026-10-23T22:00:40.0767453Z aae3fa55f377: Pulling fs layer
+2026-10-23T22:00:40.0768112Z 8445317dd84f: Pulling fs layer
+2026-10-23T22:00:40.0768793Z 639aa37fe549: Pulling fs layer
+2026-10-23T22:00:40.0769481Z b3e09271b721: Pulling fs layer
+2026-10-23T22:00:40.0770137Z 708679827647: Pulling fs layer
+2026-10-23T22:00:40.2546981Z 50a212ffc5a1: Download complete
+2026-10-23T22:00:40.2549085Z 708679827647: Download complete
+2026-10-23T22:00:40.2550373Z 00ea30b13a58: Download complete
+2026-10-23T22:00:40.2551945Z e0d7eb465374: Download complete
+2026-10-23T22:00:40.2553377Z 1a60cdc4b8b6: Download complete
+2026-10-23T22:00:40.2554799Z e9cc823db10f: Download complete
+2026-10-23T22:00:40.3543689Z f2455d5db1ca: Download complete
+2026-10-23T22:00:40.3545808Z 639aa37fe549: Download complete
+2026-10-23T22:00:40.3547424Z aae3fa55f377: Download complete
+2026-10-23T22:00:40.3549330Z 003442b28249: Download complete
+2026-10-23T22:00:40.3550616Z 2dd9b1a67dcf: Download complete
+2026-10-23T22:00:40.3558483Z 2ede25b7c579: Download complete
+2026-10-23T22:00:40.3559602Z 8445317dd84f: Download complete
+2026-10-23T22:00:40.3560571Z b3e09271b721: Download complete
+2026-10-23T22:00:40.6595613Z 774043ccc8cc: Download complete
+2026-10-23T22:00:41.2550100Z b236bce97e86: Download complete
+2026-10-23T22:00:41.2556933Z 3e13d544cd35: Download complete
+2026-10-23T22:00:41.4608142Z f2455d5db1ca: Pull complete
+2026-10-23T22:00:41.4676875Z 774043ccc8cc: Pull complete
+2026-10-23T22:00:41.5621887Z 2dd9b1a67dcf: Pull complete
+2026-10-23T22:00:41.5631923Z 8445317dd84f: Pull complete
+2026-10-23T22:00:41.6562224Z 708679827647: Pull complete
+2026-10-23T22:00:41.6562792Z 00ea30b13a58: Pull complete
+2026-10-23T22:00:41.6569410Z e0d7eb465374: Pull complete
+2026-10-23T22:00:41.6575023Z 1a60cdc4b8b6: Pull complete
+2026-10-23T22:00:42.9548008Z 50a212ffc5a1: Pull complete
+2026-10-23T22:00:42.9556782Z e9cc823db10f: Pull complete
+2026-10-23T22:00:42.9584879Z 639aa37fe549: Pull complete
+2026-10-23T22:00:42.9592428Z aae3fa55f377: Pull complete
+2026-10-23T22:00:42.9603277Z 003442b28249: Pull complete
+2026-10-23T22:00:42.9622276Z b3e09271b721: Pull complete
+2026-10-23T22:00:42.9628109Z 3e13d544cd35: Pull complete
+2026-10-23T22:00:43.0018042Z 2ede25b7c579: Pull complete
+2026-10-23T22:00:43.0018642Z Digest: sha256:7b822b0aac60967beb1ea5e576b8602c94c300a157d187f385ae3e0da199b90a
+2026-10-23T22:00:43.0018953Z Status: Downloaded newer image for pgvector/pgvector:pg16
+2026-10-23T22:00:43.0022775Z docker.io/pgvector/pgvector:pg16
+2026-10-23T22:00:43.0084711Z ##[command]/usr/bin/docker create --name 9da83b7f5ca644bfb694eda49816a7a5_pgvectorpgvectorpg16_3f8a4d --label da37df --network github_network_5a8dff0df2ec4b6c848e3ac5498fa685 --network-alias postgres -p 5432:5432 --health-cmd "pg_isready -U portfolio" --health-interval 2s --health-timeout 2s --health-retries 30 -e "POSTGRES_USER=portfolio" -e "POSTGRES_PASSWORD=synthetic-local-only" -e "POSTGRES_DB=portfolio" -e GITHUB_ACTIONS=true -e CI=true pgvector/pgvector:pg16
+2026-10-23T22:00:45.5918723Z 8817553143a104a83553d40d811990fd11b1821f4b068ca08e4105ef71efe28c
+2026-10-23T22:00:45.5942825Z ##[command]/usr/bin/docker start 8817553143a104a83553d40d811990fd11b1821f4b068ca08e4105ef71efe28c
+2026-10-23T22:00:45.7722297Z 8817553143a104a83553d40d811990fd11b1821f4b068ca08e4105ef71efe28c
+2026-10-23T22:00:45.7749278Z ##[command]/usr/bin/docker ps --all --filter id=8817553143a104a83553d40d811990fd11b1821f4b068ca08e4105ef71efe28c --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2026-10-23T22:00:45.7938473Z 8817553143a104a83553d40d811990fd11b1821f4b068ca08e4105ef71efe28c Up Less than a second (health: starting)
+2026-10-23T22:00:45.7960387Z ##[command]/usr/bin/docker port 8817553143a104a83553d40d811990fd11b1821f4b068ca08e4105ef71efe28c
+2026-10-23T22:00:45.8073974Z 5432/tcp -> 0.0.0.0:5432
+2026-10-23T22:00:45.8082559Z 5432/tcp -> [::]:5432
+2026-10-23T22:00:45.8114915Z ##[endgroup]
+2026-10-23T22:00:45.8121359Z ##[group]Waiting for all services to be ready
+2026-10-23T22:00:45.8130939Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 8817553143a104a83553d40d811990fd11b1821f4b068ca08e4105ef71efe28c
+2026-10-23T22:00:45.8257758Z starting
+2026-10-23T22:00:45.8282208Z postgres service is starting, waiting 2 seconds before checking again.
+2026-10-23T22:00:47.8283440Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 8817553143a104a83553d40d811990fd11b1821f4b068ca08e4105ef71efe28c
+2026-10-23T22:00:47.8390339Z healthy
+2026-10-23T22:00:47.8406780Z postgres service is healthy.
+2026-10-23T22:00:47.8407291Z ##[endgroup]
+2026-10-23T22:00:47.8585432Z ##[group]Run actions/checkout@v4
+2026-10-23T22:00:47.8585859Z with:
+2026-10-23T22:00:47.8585981Z   fetch-depth: 0
+2026-10-23T22:00:47.8586160Z   repository: umair24171/permission-aware-knowledge-search
+2026-10-23T22:00:47.8587692Z   token: ***
+2026-10-23T22:00:47.8587812Z   ssh-strict: true
+2026-10-23T22:00:47.8587938Z   ssh-user: git
+2026-10-23T22:00:47.8588072Z   persist-credentials: true
+2026-10-23T22:00:47.8588228Z   clean: true
+2026-10-23T22:00:47.8588359Z   sparse-checkout-cone-mode: true
+2026-10-23T22:00:47.8588514Z   fetch-tags: false
+2026-10-23T22:00:47.8588637Z   show-progress: true
+2026-10-23T22:00:47.8588760Z   lfs: false
+2026-10-23T22:00:47.8588869Z   submodules: false
+2026-10-23T22:00:47.8651351Z   set-safe-directory: true
+2026-10-23T22:00:47.8651624Z   allow-unsafe-pr-checkout: false
+2026-10-23T22:00:47.8652268Z env:
+2026-10-23T22:00:47.8652716Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:00:47.8652964Z ##[endgroup]
+2026-10-23T22:00:47.9328237Z Syncing repository: umair24171/permission-aware-knowledge-search
+2026-10-23T22:00:47.9329421Z ##[group]Getting Git version info
+2026-10-23T22:00:47.9329742Z Working directory is '/home/runner/work/permission-aware-knowledge-search/permission-aware-knowledge-search'
+2026-10-23T22:00:47.9330151Z [command]/usr/bin/git version
+2026-10-23T22:00:47.9330292Z git version 2.55.0
+2026-10-23T22:00:47.9339978Z ##[endgroup]
+2026-10-23T22:00:47.9350553Z Temporarily overriding HOME='/home/runner/work/_temp/d9c81236-cfaf-49d8-bc4b-0c9eda62ac08' before making global git config changes
+2026-10-23T22:00:47.9351190Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T22:00:47.9354176Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/permission-aware-knowledge-search/permission-aware-knowledge-search
+2026-10-23T22:00:47.9404724Z Deleting the contents of '/home/runner/work/permission-aware-knowledge-search/permission-aware-knowledge-search'
+2026-10-23T22:00:47.9406811Z ##[group]Initializing the repository
+2026-10-23T22:00:47.9409914Z [command]/usr/bin/git init /home/runner/work/permission-aware-knowledge-search/permission-aware-knowledge-search
+2026-10-23T22:00:47.9518201Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-23T22:00:47.9518686Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-23T22:00:47.9519142Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-23T22:00:47.9519486Z hint: call:
+2026-10-23T22:00:47.9519654Z hint:
+2026-10-23T22:00:47.9519949Z hint: 	git config --global init.defaultBranch <name>
+2026-10-23T22:00:47.9520228Z hint:
+2026-10-23T22:00:47.9520489Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-23T22:00:47.9520912Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-23T22:00:47.9521236Z hint:
+2026-10-23T22:00:47.9521432Z hint: 	git branch -m <name>
+2026-10-23T22:00:47.9521652Z hint:
+2026-10-23T22:00:47.9521930Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-23T22:00:47.9528019Z Initialized empty Git repository in /home/runner/work/permission-aware-knowledge-search/permission-aware-knowledge-search/.git/
+2026-10-23T22:00:47.9536068Z [command]/usr/bin/git remote add origin https://github.com/umair24171/permission-aware-knowledge-search
+2026-10-23T22:00:47.9574742Z ##[endgroup]
+2026-10-23T22:00:47.9575304Z ##[group]Disabling automatic garbage collection
+2026-10-23T22:00:47.9577938Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-23T22:00:47.9621222Z ##[endgroup]
+2026-10-23T22:00:47.9621544Z ##[group]Setting up auth
+2026-10-23T22:00:47.9627725Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T22:00:47.9658600Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T22:00:48.0027404Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T22:00:48.0055610Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T22:00:48.0273826Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T22:00:48.0300344Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T22:00:48.0513473Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-23T22:00:48.0545781Z ##[endgroup]
+2026-10-23T22:00:48.0546144Z ##[group]Fetching the repository
+2026-10-23T22:00:48.0552181Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-23T22:00:48.6266506Z From https://github.com/umair24171/permission-aware-knowledge-search
+2026-10-23T22:00:48.6266926Z  * [new branch]      main       -> origin/main
+2026-10-23T22:00:48.6278036Z [command]/usr/bin/git branch --list --remote origin/main
+2026-10-23T22:00:48.6298574Z   origin/main
+2026-10-23T22:00:48.6305064Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-10-23T22:00:48.6324409Z 88b632a9606d4042c304839780e8179cc747d726
+2026-10-23T22:00:48.6327766Z ##[endgroup]
+2026-10-23T22:00:48.6328158Z ##[group]Determining the checkout info
+2026-10-23T22:00:48.6328855Z ##[endgroup]
+2026-10-23T22:00:48.6332052Z [command]/usr/bin/git sparse-checkout disable
+2026-10-23T22:00:48.6377325Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-23T22:00:48.6402193Z ##[group]Checking out the ref
+2026-10-23T22:00:48.6405276Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-23T22:00:48.6459544Z Switched to a new branch 'main'
+2026-10-23T22:00:48.6461281Z branch 'main' set up to track 'origin/main'.
+2026-10-23T22:00:48.6465446Z ##[endgroup]
+2026-10-23T22:00:48.6508387Z [command]/usr/bin/git log -1 --format=%H
+2026-10-23T22:00:48.6524560Z 88b632a9606d4042c304839780e8179cc747d726
+2026-10-23T22:00:48.6706260Z ##[group]Run actions/setup-node@v4
+2026-10-23T22:00:48.6706429Z with:
+2026-10-23T22:00:48.6706544Z   node-version: 24
+2026-10-23T22:00:48.6706677Z   cache: npm
+2026-10-23T22:00:48.6706796Z   always-auth: false
+2026-10-23T22:00:48.6706924Z   check-latest: false
+2026-10-23T22:00:48.6708329Z   token: ***
+2026-10-23T22:00:48.6708441Z env:
+2026-10-23T22:00:48.6708680Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:00:48.6708843Z ##[endgroup]
+2026-10-23T22:00:48.7601132Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-23T22:00:48.7604557Z (node:2565) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-23T22:00:48.7605186Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-23T22:00:48.7606528Z ##[group]Environment details
+2026-10-23T22:00:49.0652944Z node: v24.21.0
+2026-10-23T22:00:49.0653225Z npm: 11.19.0
+2026-10-23T22:00:49.0653435Z yarn: 1.22.22
+2026-10-23T22:00:49.0654069Z ##[endgroup]
+2026-10-23T22:00:49.0688078Z [command]/opt/hostedtoolcache/node/24.21.0/x64/bin/npm config get cache
+2026-10-23T22:00:49.2116285Z /home/runner/.npm
+2026-10-23T22:00:49.4260258Z Cache hit for: node-cache-Linux-x64-npm-54e51819b816a76300125faa23c67339857fb8b8ab25b81fdf33622e64cb197f
+2026-10-23T22:00:49.4333757Z (node:2565) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-23T22:00:50.3489473Z Received 18566923 of 18566923 (100.0%), 26.4 MBs/sec
+2026-10-23T22:00:50.3489852Z Cache Size: ~18 MB (18566923 B)
+2026-10-23T22:00:50.3504722Z [command]/usr/bin/tar -xf /home/runner/work/_temp/b73bb9ac-a9b1-4772-9f60-1790933a0536/cache.tzst -P -C /home/runner/work/permission-aware-knowledge-search/permission-aware-knowledge-search --use-compress-program unzstd
+2026-10-23T22:00:50.3767611Z Cache restored successfully
+2026-10-23T22:00:50.3778500Z Cache restored from key: node-cache-Linux-x64-npm-54e51819b816a76300125faa23c67339857fb8b8ab25b81fdf33622e64cb197f
+2026-10-23T22:00:50.3931804Z ##[group]Run npm ci
+2026-10-23T22:00:50.3931986Z [36;1mnpm ci[0m
+2026-10-23T22:00:50.4083198Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:00:50.4083365Z env:
+2026-10-23T22:00:50.4083744Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:00:50.4083918Z ##[endgroup]
+2026-10-23T22:00:51.8782932Z 
+2026-10-23T22:00:51.8790194Z added 25 packages, and audited 26 packages in 1s
+2026-10-23T22:00:51.8790525Z 
+2026-10-23T22:00:51.8790944Z 3 packages are looking for funding
+2026-10-23T22:00:51.8791316Z   run `npm fund` for details
+2026-10-23T22:00:51.8792066Z 
+2026-10-23T22:00:51.8792222Z found 0 vulnerabilities
+2026-10-23T22:00:51.8800841Z npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+2026-10-23T22:00:51.8801483Z npm warn install-scripts   esbuild@0.25.12 (postinstall: node install.js)
+2026-10-23T22:00:51.8801866Z npm warn install-scripts
+2026-10-23T22:00:51.8802527Z npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+2026-10-23T22:00:51.9065939Z ##[group]Run npm run format:check
+2026-10-23T22:00:51.9066155Z [36;1mnpm run format:check[0m
+2026-10-23T22:00:51.9119594Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:00:51.9119744Z env:
+2026-10-23T22:00:51.9120086Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:00:51.9120257Z ##[endgroup]
+2026-10-23T22:00:51.9886822Z 
+2026-10-23T22:00:51.9887675Z > buildzn-permission-aware-knowledge-search@0.1.0 format:check
+2026-10-23T22:00:51.9888123Z > prettier --check src tests scripts *.json *.yml .github/workflows/*.yml *.md docs/*.md
+2026-10-23T22:00:51.9888324Z 
+2026-10-23T22:00:52.0492660Z Checking formatting...
+2026-10-23T22:00:52.3266508Z All matched files use Prettier code style!
+2026-10-23T22:00:52.3456735Z ##[group]Run npm run build
+2026-10-23T22:00:52.3456924Z [36;1mnpm run build[0m
+2026-10-23T22:00:52.3510898Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:00:52.3511057Z env:
+2026-10-23T22:00:52.3511414Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:00:52.3511601Z ##[endgroup]
+2026-10-23T22:00:52.4245950Z 
+2026-10-23T22:00:52.4246479Z > buildzn-permission-aware-knowledge-search@0.1.0 build
+2026-10-23T22:00:52.4246839Z > tsc --noEmit
+2026-10-23T22:00:52.4246962Z 
+2026-10-23T22:00:53.0836535Z ##[group]Run npm test
+2026-10-23T22:00:53.0836706Z [36;1mnpm test[0m
+2026-10-23T22:00:53.0888447Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:00:53.0888599Z env:
+2026-10-23T22:00:53.0889079Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:00:53.0889251Z ##[endgroup]
+2026-10-23T22:00:53.1685634Z 
+2026-10-23T22:00:53.1686366Z > buildzn-permission-aware-knowledge-search@0.1.0 test
+2026-10-23T22:00:53.1686918Z > node --import tsx --test --test-concurrency=1 tests/*.test.ts
+2026-10-23T22:00:53.1687186Z 
+2026-10-23T22:00:53.4571199Z ✔ 01 group removal revokes access without reindex (73.005328ms)
+2026-10-23T22:00:53.4842441Z ✔ 02 deleted document hidden immediately (27.68483ms)
+2026-10-23T22:00:53.5123749Z ✔ 02 deleted ancestor hides descendants (28.08621ms)
+2026-10-23T22:00:53.5457663Z ✔ 02 move document inherits new folder access (33.326232ms)
+2026-10-23T22:00:53.5724972Z ✔ 03 link capability required, guessed capability denied and valid capability works (26.694492ms)
+2026-10-23T22:00:53.5984080Z ✔ 04 nested inheritance grants access at two folder levels (25.856894ms)
+2026-10-23T22:00:53.6282950Z ✔ 04 inheritance boundary cuts parent grants (29.834056ms)
+2026-10-23T22:00:53.6534103Z ✔ 05 no access returns empty chunks without calling provider (25.023281ms)
+2026-10-23T22:00:53.6779709Z ✔ 06 near duplicate permission sets do not leak private appendix (24.469944ms)
+2026-10-23T22:00:53.7022345Z ✔ 07 direct grant revoked after indexing (24.280229ms)
+2026-10-23T22:00:53.7267795Z ✔ 07 link revoked after indexing (24.537636ms)
+2026-10-23T22:00:53.7501407Z ✔ 08 prompt injection cannot change authenticated principal or SQL predicate (23.327144ms)
+2026-10-23T22:00:53.7732554Z ✔ 09 SQL injection in user/query has no authority (22.599373ms)
+2026-10-23T22:00:53.7949595Z ✔ 09 invalid limit 0 rejected (22.163523ms)
+2026-10-23T22:00:53.8176531Z ✔ 09 invalid limit -1 rejected (22.312889ms)
+2026-10-23T22:00:53.8376052Z ✔ 09 invalid limit 21 rejected (20.283004ms)
+2026-10-23T22:00:53.8578323Z ✔ 09 invalid limit 1.5 rejected (20.169063ms)
+2026-10-23T22:00:53.8787934Z ✔ 09 invalid limit NaN rejected (20.91273ms)
+2026-10-23T22:00:53.9000031Z ✔ 09 cyclic and cross-connector moves rejected (21.193828ms)
+2026-10-23T22:00:53.9264903Z ✔ 10 source version change hides stale index until reindex (26.038248ms)
+2026-10-23T22:00:53.9635496Z ✔ 10 deleted ancestor denies descendants beyond inheritance boundary (37.188015ms)
+2026-10-23T22:00:55.1050435Z {"leakPairs":1728,"unauthorizedChunks":0,"data":"synthetic"}
+2026-10-23T22:00:55.1054886Z ✔ 11 Cartesian leak suite checks 1728 user/query pairs across ACL changes (1141.809338ms)
+2026-10-23T22:00:55.1310290Z {"recallAt3":1,"mrr":1}
+2026-10-23T22:00:55.1327085Z ✔ 12 retrieval quality eval uses accessible topical labels (26.028277ms)
+2026-10-23T22:00:55.1543984Z ✔ unit hash embeddings deterministic and nonzero (22.399901ms)
+2026-10-23T22:00:55.1706017Z ℹ tests 24
+2026-10-23T22:00:55.1706260Z ℹ suites 0
+2026-10-23T22:00:55.1706465Z ℹ pass 24
+2026-10-23T22:00:55.1706723Z ℹ fail 0
+2026-10-23T22:00:55.1706901Z ℹ cancelled 0
+2026-10-23T22:00:55.1707047Z ℹ skipped 0
+2026-10-23T22:00:55.1707174Z ℹ todo 0
+2026-10-23T22:00:55.1707328Z ℹ duration_ms 1977.004676
+2026-10-23T22:00:55.1836727Z ##[group]Run DATABASE_URL= TEST_PGLITE=1 npm test
+2026-10-23T22:00:55.1836974Z [36;1mDATABASE_URL= TEST_PGLITE=1 npm test[0m
+2026-10-23T22:00:55.1887846Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:00:55.1887996Z env:
+2026-10-23T22:00:55.1888354Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:00:55.1888527Z ##[endgroup]
+2026-10-23T22:00:55.2557870Z 
+2026-10-23T22:00:55.2558293Z > buildzn-permission-aware-knowledge-search@0.1.0 test
+2026-10-23T22:00:55.2558706Z > node --import tsx --test --test-concurrency=1 tests/*.test.ts
+2026-10-23T22:00:55.2558861Z 
+2026-10-23T22:00:58.9375505Z {"leakPairs":1728,"unauthorizedChunks":0,"data":"synthetic"}
+2026-10-23T22:00:58.9660010Z {"recallAt3":1,"mrr":1}
+2026-10-23T22:00:58.9944836Z ✔ 01 group removal revokes access without reindex (883.692469ms)
+2026-10-23T22:00:58.9945574Z ✔ 02 deleted document hidden immediately (31.645588ms)
+2026-10-23T22:00:58.9946715Z ✔ 02 deleted ancestor hides descendants (29.157952ms)
+2026-10-23T22:00:58.9947314Z ✔ 02 move document inherits new folder access (35.139417ms)
+2026-10-23T22:00:58.9947982Z ✔ 03 link capability required, guessed capability denied and valid capability works (34.585178ms)
+2026-10-23T22:00:58.9948656Z ✔ 04 nested inheritance grants access at two folder levels (25.390639ms)
+2026-10-23T22:00:58.9949185Z ✔ 04 inheritance boundary cuts parent grants (31.696044ms)
+2026-10-23T22:00:58.9954761Z ✔ 05 no access returns empty chunks without calling provider (27.387321ms)
+2026-10-23T22:00:58.9958338Z ✔ 06 near duplicate permission sets do not leak private appendix (31.036445ms)
+2026-10-23T22:00:58.9959584Z ✔ 07 direct grant revoked after indexing (25.836424ms)
+2026-10-23T22:00:58.9962788Z ✔ 07 link revoked after indexing (25.797124ms)
+2026-10-23T22:00:58.9963742Z ✔ 08 prompt injection cannot change authenticated principal or SQL predicate (25.349396ms)
+2026-10-23T22:00:58.9964417Z ✔ 09 SQL injection in user/query has no authority (26.027383ms)
+2026-10-23T22:00:58.9964886Z ✔ 09 invalid limit 0 rejected (26.749306ms)
+2026-10-23T22:00:58.9965284Z ✔ 09 invalid limit -1 rejected (21.361629ms)
+2026-10-23T22:00:58.9965669Z ✔ 09 invalid limit 21 rejected (18.987575ms)
+2026-10-23T22:00:58.9966425Z ✔ 09 invalid limit 1.5 rejected (20.585093ms)
+2026-10-23T22:00:58.9966812Z ✔ 09 invalid limit NaN rejected (23.13955ms)
+2026-10-23T22:00:58.9967240Z ✔ 09 cyclic and cross-connector moves rejected (27.04281ms)
+2026-10-23T22:00:58.9967755Z ✔ 10 source version change hides stale index until reindex (29.475422ms)
+2026-10-23T22:00:58.9968333Z ✔ 10 deleted ancestor denies descendants beyond inheritance boundary (27.907259ms)
+2026-10-23T22:00:58.9968977Z ✔ 11 Cartesian leak suite checks 1728 user/query pairs across ACL changes (2002.48154ms)
+2026-10-23T22:00:58.9969566Z ✔ 12 retrieval quality eval uses accessible topical labels (28.658799ms)
+2026-10-23T22:00:58.9970103Z ✔ unit hash embeddings deterministic and nonzero (18.93437ms)
+2026-10-23T22:00:59.0433197Z ℹ tests 24
+2026-10-23T22:00:59.0433443Z ℹ suites 0
+2026-10-23T22:00:59.0433664Z ℹ pass 24
+2026-10-23T22:00:59.0433853Z ℹ fail 0
+2026-10-23T22:00:59.0434057Z ℹ cancelled 0
+2026-10-23T22:00:59.0434263Z ℹ skipped 0
+2026-10-23T22:00:59.0435244Z ℹ todo 0
+2026-10-23T22:00:59.0435491Z ℹ duration_ms 3764.186069
+2026-10-23T22:00:59.0560994Z ##[group]Run npm run scan
+2026-10-23T22:00:59.0561177Z [36;1mnpm run scan[0m
+2026-10-23T22:00:59.0612292Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:00:59.0612451Z env:
+2026-10-23T22:00:59.0612803Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:00:59.0612987Z ##[endgroup]
+2026-10-23T22:00:59.1295005Z 
+2026-10-23T22:00:59.1295650Z > buildzn-permission-aware-knowledge-search@0.1.0 scan
+2026-10-23T22:00:59.1296318Z > node scripts/scan.mjs
+2026-10-23T22:00:59.1296472Z 
+2026-10-23T22:00:59.4873866Z Scanned 37 tracked files and 68 historical blobs: no configured credential patterns or env files. Synthetic fixtures reviewed separately. This pattern scan is not proof of absence.
+2026-10-23T22:00:59.4993723Z ##[group]Run npm run demo
+2026-10-23T22:00:59.4993913Z [36;1mnpm run demo[0m
+2026-10-23T22:00:59.5045189Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:00:59.5045347Z env:
+2026-10-23T22:00:59.5045817Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:00:59.5046035Z ##[endgroup]
+2026-10-23T22:00:59.5709298Z 
+2026-10-23T22:00:59.5709960Z > buildzn-permission-aware-knowledge-search@0.1.0 demo
+2026-10-23T22:00:59.5710333Z > node --import tsx src/demo.ts
+2026-10-23T22:00:59.5710447Z 
+2026-10-23T22:00:59.7486679Z All documents, users and ACLs are synthetic.
+2026-10-23T22:00:59.7524753Z Bob before revoke: [ 'deploy', 'leave-policy' ]
+2026-10-23T22:00:59.7545312Z Bob after revoke: [ 'leave-policy' ]
+2026-10-23T22:00:59.7557138Z Outsider restricted prompt: { text: 'No accessible evidence.', chunks: [] }
+2026-10-23T22:00:59.7569622Z Carol refund evidence: {
+2026-10-23T22:00:59.7570479Z   text: '[refund-policy] Refund policy: delivered orders can receive refunds within thirty days, maximum fifty dollars.',
+2026-10-23T22:00:59.7571005Z   chunks: [
+2026-10-23T22:00:59.7571189Z     {
+2026-10-23T22:00:59.7571400Z       id: 'refund-policy:0',
+2026-10-23T22:00:59.7571634Z       node: 'refund-policy',
+2026-10-23T22:00:59.7572114Z       body: 'Refund policy: delivered orders can receive refunds within thirty days, maximum fifty dollars.',
+2026-10-23T22:00:59.7572652Z       distance: 0.6077677297236319
+2026-10-23T22:00:59.7572919Z     }
+2026-10-23T22:00:59.7573096Z   ]
+2026-10-23T22:00:59.7573276Z }
+2026-10-23T22:00:59.7769168Z ##[group]Run unset DATABASE_URL
+2026-10-23T22:00:59.7769373Z [36;1munset DATABASE_URL[0m
+2026-10-23T22:00:59.7769624Z [36;1mdocker compose up --build --abort-on-container-exit --exit-code-from app[0m
+2026-10-23T22:00:59.7770012Z [36;1mdocker compose down -v[0m
+2026-10-23T22:00:59.7820626Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:00:59.7820779Z env:
+2026-10-23T22:00:59.7821122Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:00:59.7821290Z ##[endgroup]
+2026-10-23T22:01:00.0940505Z  Image permission-aware-knowledge-search-app Building 
+2026-10-23T22:01:00.1524447Z #1 [internal] load local bake definitions
+2026-10-23T22:01:00.2606147Z #1 reading from stdin 662B done
+2026-10-23T22:01:00.2606404Z #1 DONE 0.0s
+2026-10-23T22:01:00.4304109Z 
+2026-10-23T22:01:00.4304532Z #2 [internal] load build definition from Dockerfile
+2026-10-23T22:01:00.4304809Z #2 transferring dockerfile: 164B done
+2026-10-23T22:01:00.4304977Z #2 DONE 0.0s
+2026-10-23T22:01:00.4305058Z 
+2026-10-23T22:01:00.4305361Z #3 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+2026-10-23T22:01:00.6001830Z #3 ...
+2026-10-23T22:01:00.6001969Z 
+2026-10-23T22:01:00.6002246Z #4 [auth] library/node:pull token for registry-1.docker.io
+2026-10-23T22:01:00.6002520Z #4 DONE 0.0s
+2026-10-23T22:01:00.7504053Z 
+2026-10-23T22:01:00.7504373Z #3 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+2026-10-23T22:01:01.0808121Z #3 DONE 0.8s
+2026-10-23T22:01:01.1967759Z 
+2026-10-23T22:01:01.1968146Z #5 [internal] load .dockerignore
+2026-10-23T22:01:01.1968553Z #5 transferring context: 76B done
+2026-10-23T22:01:01.1968800Z #5 DONE 0.0s
+2026-10-23T22:01:01.1968905Z 
+2026-10-23T22:01:01.1969037Z #6 [internal] load build context
+2026-10-23T22:01:01.1969339Z #6 transferring context: 81.50kB done
+2026-10-23T22:01:01.1969593Z #6 DONE 0.0s
+2026-10-23T22:01:01.1969699Z 
+2026-10-23T22:01:01.1970217Z #7 [1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:55fb5f5a527ea2c5c4a95f963e48ef90aa38c7b346054fdc8ee9957a2b55d205
+2026-10-23T22:01:01.1971155Z #7 resolve docker.io/library/node:24-bookworm-slim@sha256:55fb5f5a527ea2c5c4a95f963e48ef90aa38c7b346054fdc8ee9957a2b55d205 0.0s done
+2026-10-23T22:01:01.1971925Z #7 sha256:6d793208473aa7d9ccc02b9de99aee40e4d6e73065d5307d076fad3ba554d580 450B / 450B 0.1s done
+2026-10-23T22:01:01.2980186Z #7 sha256:f2b8e65232e105b573ea2f37c4a2ec56bcf0b63687ae2bbe329cf4252f30bc1d 1.71MB / 1.71MB 0.1s done
+2026-10-23T22:01:01.2980787Z #7 sha256:c0e48fd1aa256850e18f180365b8fa3e55ae2197e85461fd3392cfb5c4c8e5e7 0B / 51.08MB 0.2s
+2026-10-23T22:01:01.2982210Z #7 sha256:47e82ed2c7200e6bb57827745085027ba425376a5ed4ba4a8e295a4e3b5d1b40 3.31kB / 3.31kB 0.2s done
+2026-10-23T22:01:01.4360055Z #7 sha256:c0e48fd1aa256850e18f180365b8fa3e55ae2197e85461fd3392cfb5c4c8e5e7 51.08MB / 51.08MB 0.3s
+2026-10-23T22:01:01.4360554Z #7 sha256:11422d7ca1a44390a32bd8d8d9dc5946b4d053b3bbd9507d682e35584ba84a26 10.49MB / 28.25MB 0.2s
+2026-10-23T22:01:01.5860267Z #7 sha256:11422d7ca1a44390a32bd8d8d9dc5946b4d053b3bbd9507d682e35584ba84a26 28.25MB / 28.25MB 0.3s
+2026-10-23T22:01:01.9218225Z #7 sha256:c0e48fd1aa256850e18f180365b8fa3e55ae2197e85461fd3392cfb5c4c8e5e7 51.08MB / 51.08MB 0.6s done
+2026-10-23T22:01:01.9219369Z #7 sha256:11422d7ca1a44390a32bd8d8d9dc5946b4d053b3bbd9507d682e35584ba84a26 28.25MB / 28.25MB 0.4s done
+2026-10-23T22:01:01.9220088Z #7 extracting sha256:11422d7ca1a44390a32bd8d8d9dc5946b4d053b3bbd9507d682e35584ba84a26
+2026-10-23T22:01:02.2603170Z #7 extracting sha256:11422d7ca1a44390a32bd8d8d9dc5946b4d053b3bbd9507d682e35584ba84a26 0.5s done
+2026-10-23T22:01:02.2603650Z #7 DONE 1.2s
+2026-10-23T22:01:02.4159970Z 
+2026-10-23T22:01:02.4161080Z #7 [1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:55fb5f5a527ea2c5c4a95f963e48ef90aa38c7b346054fdc8ee9957a2b55d205
+2026-10-23T22:01:02.4161896Z #7 extracting sha256:47e82ed2c7200e6bb57827745085027ba425376a5ed4ba4a8e295a4e3b5d1b40 done
+2026-10-23T22:01:02.4162563Z #7 extracting sha256:c0e48fd1aa256850e18f180365b8fa3e55ae2197e85461fd3392cfb5c4c8e5e7
+2026-10-23T22:01:02.9426009Z #7 extracting sha256:c0e48fd1aa256850e18f180365b8fa3e55ae2197e85461fd3392cfb5c4c8e5e7 0.7s done
+2026-10-23T22:01:02.9426559Z #7 DONE 1.8s
+2026-10-23T22:01:03.1238724Z 
+2026-10-23T22:01:03.1239777Z #7 [1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:55fb5f5a527ea2c5c4a95f963e48ef90aa38c7b346054fdc8ee9957a2b55d205
+2026-10-23T22:01:03.1240335Z #7 extracting sha256:f2b8e65232e105b573ea2f37c4a2ec56bcf0b63687ae2bbe329cf4252f30bc1d 0.0s done
+2026-10-23T22:01:03.1240750Z #7 extracting sha256:6d793208473aa7d9ccc02b9de99aee40e4d6e73065d5307d076fad3ba554d580 done
+2026-10-23T22:01:03.1241003Z #7 DONE 1.9s
+2026-10-23T22:01:03.1241079Z 
+2026-10-23T22:01:03.1241159Z #8 [2/6] WORKDIR /app
+2026-10-23T22:01:04.7193946Z #8 DONE 1.7s
+2026-10-23T22:01:04.8830769Z 
+2026-10-23T22:01:04.8832593Z #9 [3/6] COPY package*.json ./
+2026-10-23T22:01:04.8834049Z #9 DONE 0.0s
+2026-10-23T22:01:04.8834283Z 
+2026-10-23T22:01:04.8835064Z #10 [4/6] RUN npm ci
+2026-10-23T22:01:05.7325015Z #10 1.000 
+2026-10-23T22:01:05.7325526Z #10 1.000 added 25 packages, and audited 26 packages in 833ms
+2026-10-23T22:01:05.7326094Z #10 1.000 
+2026-10-23T22:01:05.8849562Z #10 1.000 3 packages are looking for funding
+2026-10-23T22:01:05.8849883Z #10 1.000   run `npm fund` for details
+2026-10-23T22:01:05.8850046Z #10 1.001 
+2026-10-23T22:01:05.8850194Z #10 1.001 found 0 vulnerabilities
+2026-10-23T22:01:05.8850523Z #10 1.001 npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+2026-10-23T22:01:05.8850917Z #10 1.001 npm warn install-scripts   esbuild@0.25.12 (postinstall: node install.js)
+2026-10-23T22:01:05.8851179Z #10 1.001 npm warn install-scripts
+2026-10-23T22:01:05.8851547Z #10 1.001 npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+2026-10-23T22:01:05.8851855Z #10 1.002 npm notice
+2026-10-23T22:01:05.8852093Z #10 1.002 npm notice New major version of npm available! 11.19.1 -> 12.2.1
+2026-10-23T22:01:05.8852438Z #10 1.002 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+2026-10-23T22:01:05.8852740Z #10 1.002 npm notice To update run: npm install -g npm@12.2.1
+2026-10-23T22:01:05.8852942Z #10 1.002 npm notice
+2026-10-23T22:01:06.2270395Z #10 DONE 1.5s
+2026-10-23T22:01:06.3985194Z 
+2026-10-23T22:01:06.3985511Z #11 [5/6] COPY . .
+2026-10-23T22:01:06.3985839Z #11 DONE 0.0s
+2026-10-23T22:01:06.3985924Z 
+2026-10-23T22:01:06.3985994Z #12 [6/6] RUN npm run build
+2026-10-23T22:01:06.4172274Z #12 0.169 
+2026-10-23T22:01:06.4172741Z #12 0.169 > buildzn-permission-aware-knowledge-search@0.1.0 build
+2026-10-23T22:01:06.4173135Z #12 0.169 > tsc --noEmit
+2026-10-23T22:01:06.4173361Z #12 0.169 
+2026-10-23T22:01:07.0986607Z #12 DONE 0.9s
+2026-10-23T22:01:07.2522325Z 
+2026-10-23T22:01:07.2522916Z #13 exporting to image
+2026-10-23T22:01:07.2523225Z #13 exporting layers
+2026-10-23T22:01:09.2005634Z #13 exporting layers 2.1s done
+2026-10-23T22:01:09.3738648Z #13 exporting manifest sha256:c43f35d7609c17c55172e52c82041f917c294ced7313da5212dc7515012d693c done
+2026-10-23T22:01:09.3739443Z #13 exporting config sha256:bb7e8c13970c9587b746f5afb9f771f1c9493c7e2f894f2f006461e5bb722a8d done
+2026-10-23T22:01:09.3740062Z #13 exporting attestation manifest sha256:abcca53b9919b3ae289bd9241e3deb8a4e025f56cbfbd8bce35cab9609609d45 done
+2026-10-23T22:01:09.3740536Z #13 exporting manifest list sha256:005fd5028252799021b6614d0e1ab36efe115c0687f074b6db4c27de50a0fa81 done
+2026-10-23T22:01:09.3740941Z #13 naming to docker.io/library/permission-aware-knowledge-search-app:latest done
+2026-10-23T22:01:09.3741461Z #13 unpacking to docker.io/library/permission-aware-knowledge-search-app:latest
+2026-10-23T22:01:09.5680749Z #13 unpacking to docker.io/library/permission-aware-knowledge-search-app:latest 0.3s done
+2026-10-23T22:01:09.6202038Z #13 DONE 2.5s
+2026-10-23T22:01:09.6202241Z 
+2026-10-23T22:01:09.6202420Z #14 resolving provenance for metadata file
+2026-10-23T22:01:09.6202727Z #14 DONE 0.0s
+2026-10-23T22:01:09.6203068Z  Image permission-aware-knowledge-search-app Built 
+2026-10-23T22:01:09.6219374Z  Network permission-aware-knowledge-search_default Creating 
+2026-10-23T22:01:09.6462611Z  Network permission-aware-knowledge-search_default Created 
+2026-10-23T22:01:09.6466802Z  Volume permission-aware-knowledge-search_pgdata Creating 
+2026-10-23T22:01:09.6477167Z  Volume permission-aware-knowledge-search_pgdata Created 
+2026-10-23T22:01:09.6482929Z  Container permission-aware-knowledge-search-db-1 Creating 
+2026-10-23T22:01:10.1541174Z  Container permission-aware-knowledge-search-db-1 Created 
+2026-10-23T22:01:10.1541686Z  Container permission-aware-knowledge-search-app-1 Creating 
+2026-10-23T22:01:10.1733422Z  Container permission-aware-knowledge-search-app-1 Created 
+2026-10-23T22:01:10.1827205Z Attaching to app-1, db-1
+2026-10-23T22:01:10.1943565Z  Container permission-aware-knowledge-search-db-1 Starting 
+2026-10-23T22:01:10.2908614Z  Container permission-aware-knowledge-search-db-1 Started 
+2026-10-23T22:01:10.2909128Z  Container permission-aware-knowledge-search-db-1 Waiting 
+2026-10-23T22:01:10.3267105Z db-1  | The files belonging to this database system will be owned by user "postgres".
+2026-10-23T22:01:10.3267663Z db-1  | This user must also own the server process.
+2026-10-23T22:01:10.3267951Z db-1  | 
+2026-10-23T22:01:10.3268314Z db-1  | The database cluster will be initialized with locale "en_US.utf8".
+2026-10-23T22:01:10.3268830Z db-1  | The default database encoding has accordingly been set to "UTF8".
+2026-10-23T22:01:10.3269343Z db-1  | The default text search configuration will be set to "english".
+2026-10-23T22:01:10.3269651Z db-1  | 
+2026-10-23T22:01:10.3269911Z db-1  | Data page checksums are disabled.
+2026-10-23T22:01:10.3270169Z db-1  | 
+2026-10-23T22:01:10.3270531Z db-1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2026-10-23T22:01:10.3270929Z db-1  | creating subdirectories ... ok
+2026-10-23T22:01:10.3271302Z db-1  | selecting dynamic shared memory implementation ... posix
+2026-10-23T22:01:10.3335536Z db-1  | selecting default max_connections ... 100
+2026-10-23T22:01:10.3491255Z db-1  | selecting default shared_buffers ... 128MB
+2026-10-23T22:01:10.3772249Z db-1  | selecting default time zone ... Etc/UTC
+2026-10-23T22:01:10.3776984Z db-1  | creating configuration files ... ok
+2026-10-23T22:01:10.4663757Z db-1  | running bootstrap script ... ok
+2026-10-23T22:01:10.6671232Z db-1  | performing post-bootstrap initialization ... ok
+2026-10-23T22:01:10.9689882Z db-1  | syncing data to disk ... ok
+2026-10-23T22:01:10.9690167Z db-1  | 
+2026-10-23T22:01:10.9690346Z db-1  | 
+2026-10-23T22:01:10.9690668Z db-1  | Success. You can now start the database server using:
+2026-10-23T22:01:10.9690963Z db-1  | 
+2026-10-23T22:01:10.9691278Z db-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+2026-10-23T22:01:10.9691513Z db-1  | 
+2026-10-23T22:01:10.9691826Z db-1  | initdb: warning: enabling "trust" authentication for local connections
+2026-10-23T22:01:10.9705141Z db-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2026-10-23T22:01:11.0009459Z db-1  | waiting for server to start....2026-10-23 22:01:11.000 UTC [48] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-10-23T22:01:11.0013753Z db-1  | 2026-10-23 22:01:11.001 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-23T22:01:11.0038189Z db-1  | 2026-10-23 22:01:11.003 UTC [51] LOG:  database system was shut down at 2026-10-23 22:01:10 UTC
+2026-10-23T22:01:11.0072567Z db-1  | 2026-10-23 22:01:11.007 UTC [48] LOG:  database system is ready to accept connections
+2026-10-23T22:01:11.0868904Z db-1  |  done
+2026-10-23T22:01:11.0869149Z db-1  | server started
+2026-10-23T22:01:11.1698604Z db-1  | CREATE DATABASE
+2026-10-23T22:01:11.1700443Z db-1  | 
+2026-10-23T22:01:11.1704725Z db-1  | 
+2026-10-23T22:01:11.1705460Z db-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2026-10-23T22:01:11.1706127Z db-1  | 
+2026-10-23T22:01:11.1712502Z db-1  | waiting for server to shut down...2026-10-23 22:01:11.171 UTC [48] LOG:  received fast shutdown request
+2026-10-23T22:01:11.1731572Z db-1  | .2026-10-23 22:01:11.171 UTC [48] LOG:  aborting any active transactions
+2026-10-23T22:01:11.1737891Z db-1  | 2026-10-23 22:01:11.173 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+2026-10-23T22:01:11.1745191Z db-1  | 2026-10-23 22:01:11.174 UTC [49] LOG:  shutting down
+2026-10-23T22:01:11.1747866Z db-1  | 2026-10-23 22:01:11.174 UTC [49] LOG:  checkpoint starting: shutdown immediate
+2026-10-23T22:01:11.2449315Z db-1  | 2026-10-23 22:01:11.244 UTC [49] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.065 s, sync=0.005 s, total=0.071 s; sync files=301, longest=0.004 s, average=0.001 s; distance=4255 kB, estimate=4255 kB; lsn=0/1912118, redo lsn=0/1912118
+2026-10-23T22:01:11.2513796Z db-1  | 2026-10-23 22:01:11.251 UTC [48] LOG:  database system is shut down
+2026-10-23T22:01:11.2713173Z db-1  |  done
+2026-10-23T22:01:11.2713572Z db-1  | server stopped
+2026-10-23T22:01:11.2722749Z db-1  | 
+2026-10-23T22:01:11.2723090Z db-1  | PostgreSQL init process complete; ready for start up.
+2026-10-23T22:01:11.2723394Z db-1  | 
+2026-10-23T22:01:11.2892679Z db-1  | 2026-10-23 22:01:11.288 UTC [1] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-10-23T22:01:11.2894269Z db-1  | 2026-10-23 22:01:11.289 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-10-23T22:01:11.2894987Z db-1  | 2026-10-23 22:01:11.289 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-10-23T22:01:11.2900809Z db-1  | 2026-10-23 22:01:11.289 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-23T22:01:11.2926251Z db-1  | 2026-10-23 22:01:11.292 UTC [64] LOG:  database system was shut down at 2026-10-23 22:01:11 UTC
+2026-10-23T22:01:11.2963977Z db-1  | 2026-10-23 22:01:11.296 UTC [1] LOG:  database system is ready to accept connections
+2026-10-23T22:01:12.7924498Z  Container permission-aware-knowledge-search-db-1 Healthy 
+2026-10-23T22:01:12.7924959Z  Container permission-aware-knowledge-search-app-1 Starting 
+2026-10-23T22:01:12.8868034Z  Container permission-aware-knowledge-search-app-1 Started 
+2026-10-23T22:01:12.9484323Z app-1  | 
+2026-10-23T22:01:12.9484773Z app-1  | > buildzn-permission-aware-knowledge-search@0.1.0 demo
+2026-10-23T22:01:12.9485189Z app-1  | > node --import tsx src/demo.ts
+2026-10-23T22:01:12.9485442Z app-1  | 
+2026-10-23T22:01:13.1617081Z app-1  | All documents, users and ACLs are synthetic.
+2026-10-23T22:01:13.1636234Z app-1  | Bob before revoke: [ 'deploy', 'leave-policy' ]
+2026-10-23T22:01:13.1651228Z app-1  | Bob after revoke: [ 'leave-policy' ]
+2026-10-23T22:01:13.1664013Z app-1  | Outsider restricted prompt: { text: 'No accessible evidence.', chunks: [] }
+2026-10-23T22:01:13.1672511Z app-1  | Carol refund evidence: {
+2026-10-23T22:01:13.1673172Z app-1  |   text: '[refund-policy] Refund policy: delivered orders can receive refunds within thirty days, maximum fifty dollars.',
+2026-10-23T22:01:13.1673769Z app-1  |   chunks: [
+2026-10-23T22:01:13.1674026Z app-1  |     {
+2026-10-23T22:01:13.1674331Z app-1  |       id: 'refund-policy:0',
+2026-10-23T22:01:13.1674730Z app-1  |       node: 'refund-policy',
+2026-10-23T22:01:13.1675432Z app-1  |       body: 'Refund policy: delivered orders can receive refunds within thirty days, maximum fifty dollars.',
+2026-10-23T22:01:13.1676107Z app-1  |       distance: 0.6077677297236319
+2026-10-23T22:01:13.1676388Z app-1  |     }
+2026-10-23T22:01:13.1676609Z app-1  |   ]
+2026-10-23T22:01:13.1676807Z app-1  | }
+2026-10-23T22:01:13.2534870Z  Compose Stopping Aborting on container exit...
+2026-10-23T22:01:13.2535182Z 
+2026-10-23T22:01:13.2535590Z [Kapp-1 exited with code 0
+2026-10-23T22:01:13.2640461Z  Container permission-aware-knowledge-search-app-1 Stopping 
+2026-10-23T22:01:13.2642773Z  Container permission-aware-knowledge-search-app-1 Stopped 
+2026-10-23T22:01:13.2643265Z  Container permission-aware-knowledge-search-db-1 Stopping 
+2026-10-23T22:01:13.2708305Z db-1   | 2026-10-23 22:01:13.270 UTC [1] LOG:  received fast shutdown request
+2026-10-23T22:01:13.2712083Z db-1   | 2026-10-23 22:01:13.270 UTC [1] LOG:  aborting any active transactions
+2026-10-23T22:01:13.2736870Z db-1   | 2026-10-23 22:01:13.273 UTC [1] LOG:  background worker "logical replication launcher" (PID 67) exited with exit code 1
+2026-10-23T22:01:13.2745427Z db-1   | 2026-10-23 22:01:13.274 UTC [62] LOG:  shutting down
+2026-10-23T22:01:13.2748337Z db-1   | 2026-10-23 22:01:13.274 UTC [62] LOG:  checkpoint starting: shutdown immediate
+2026-10-23T22:01:13.2791460Z db-1   | 2026-10-23 22:01:13.278 UTC [62] LOG:  checkpoint complete: wrote 234 buffers (1.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.001 s, total=0.005 s; sync files=111, longest=0.001 s, average=0.001 s; distance=1193 kB, estimate=1193 kB; lsn=0/1A3C750, redo lsn=0/1A3C750
+2026-10-23T22:01:13.2842430Z db-1   | 2026-10-23 22:01:13.284 UTC [1] LOG:  database system is shut down
+2026-10-23T22:01:13.3626039Z  Container permission-aware-knowledge-search-db-1 Stopped 
+2026-10-23T22:01:13.3633701Z 
+2026-10-23T22:01:13.3634455Z [Kdb-1 exited with code 0
+2026-10-23T22:01:13.4151360Z  Container permission-aware-knowledge-search-app-1 Stopping 
+2026-10-23T22:01:13.4154066Z  Container permission-aware-knowledge-search-app-1 Stopped 
+2026-10-23T22:01:13.4154397Z  Container permission-aware-knowledge-search-app-1 Removing 
+2026-10-23T22:01:13.4229682Z  Container permission-aware-knowledge-search-app-1 Removed 
+2026-10-23T22:01:13.4230169Z  Container permission-aware-knowledge-search-db-1 Stopping 
+2026-10-23T22:01:13.4232417Z  Container permission-aware-knowledge-search-db-1 Stopped 
+2026-10-23T22:01:13.4232783Z  Container permission-aware-knowledge-search-db-1 Removing 
+2026-10-23T22:01:13.4293288Z  Container permission-aware-knowledge-search-db-1 Removed 
+2026-10-23T22:01:13.4304941Z  Network permission-aware-knowledge-search_default Removing 
+2026-10-23T22:01:13.4311637Z  Volume permission-aware-knowledge-search_pgdata Removing 
+2026-10-23T22:01:13.4749447Z  Network permission-aware-knowledge-search_default Removed 
+2026-10-23T22:01:13.5761675Z  Volume permission-aware-knowledge-search_pgdata Removed 
+2026-10-23T22:01:13.5862709Z Post job cleanup.
+2026-10-23T22:01:13.6680233Z (node:3951) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-23T22:01:13.6680716Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-23T22:01:13.6682421Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-54e51819b816a76300125faa23c67339857fb8b8ab25b81fdf33622e64cb197f, not saving cache.
+2026-10-23T22:01:13.6787811Z Post job cleanup.
+2026-10-23T22:01:13.7347788Z [command]/usr/bin/git version
+2026-10-23T22:01:13.7387000Z git version 2.55.0
+2026-10-23T22:01:13.7416326Z Temporarily overriding HOME='/home/runner/work/_temp/25ab1a81-01a3-447e-9d22-c86a88f3ffb1' before making global git config changes
+2026-10-23T22:01:13.7416949Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T22:01:13.7419461Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/permission-aware-knowledge-search/permission-aware-knowledge-search
+2026-10-23T22:01:13.7457834Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T22:01:13.7497965Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T22:01:13.7760669Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T22:01:13.7785317Z http.https://github.com/.extraheader
+2026-10-23T22:01:13.7794588Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-23T22:01:13.7837159Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T22:01:13.8101212Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T22:01:13.8133256Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T22:01:13.8474905Z Print service container logs: 9da83b7f5ca644bfb694eda49816a7a5_pgvectorpgvectorpg16_3f8a4d
+2026-10-23T22:01:13.8478295Z ##[command]/usr/bin/docker logs --details 8817553143a104a83553d40d811990fd11b1821f4b068ca08e4105ef71efe28c
+2026-10-23T22:01:13.8597958Z  The files belonging to this database system will be owned by user "postgres".
+2026-10-23T22:01:13.8599788Z  initdb: warning: enabling "trust" authentication for local connections
+2026-10-23T22:01:13.8600408Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2026-10-23T22:01:13.8601280Z  2026-10-23 22:00:46.765 UTC [1] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-10-23T22:01:13.8601932Z  2026-10-23 22:00:46.766 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-10-23T22:01:13.8602413Z  2026-10-23 22:00:46.766 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-10-23T22:01:13.8602864Z  2026-10-23 22:00:46.766 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-23T22:01:13.8603186Z  2026-10-23 22:00:46.769 UTC [64] LOG:  database system was shut down at 2026-10-23 22:00:46 UTC
+2026-10-23T22:01:13.8603487Z  2026-10-23 22:00:46.772 UTC [1] LOG:  database system is ready to accept connections
+2026-10-23T22:01:13.8603732Z  This user must also own the server process.
+2026-10-23T22:01:13.8603892Z  
+2026-10-23T22:01:13.8604068Z  The database cluster will be initialized with locale "en_US.utf8".
+2026-10-23T22:01:13.8604335Z  The default database encoding has accordingly been set to "UTF8".
+2026-10-23T22:01:13.8604581Z  The default text search configuration will be set to "english".
+2026-10-23T22:01:13.8604782Z  
+2026-10-23T22:01:13.8604907Z  Data page checksums are disabled.
+2026-10-23T22:01:13.8605052Z  
+2026-10-23T22:01:13.8605228Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2026-10-23T22:01:13.8605463Z  creating subdirectories ... ok
+2026-10-23T22:01:13.8605650Z  selecting dynamic shared memory implementation ... posix
+2026-10-23T22:01:13.8606094Z  selecting default max_connections ... 100
+2026-10-23T22:01:13.8606355Z  selecting default shared_buffers ... 128MB
+2026-10-23T22:01:13.8606625Z  selecting default time zone ... Etc/UTC
+2026-10-23T22:01:13.8606880Z  creating configuration files ... ok
+2026-10-23T22:01:13.8607125Z  running bootstrap script ... ok
+2026-10-23T22:01:13.8607401Z  performing post-bootstrap initialization ... ok
+2026-10-23T22:01:13.8607676Z  syncing data to disk ... ok
+2026-10-23T22:01:13.8607885Z  
+2026-10-23T22:01:13.8608050Z  
+2026-10-23T22:01:13.8608262Z  Success. You can now start the database server using:
+2026-10-23T22:01:13.8608534Z  
+2026-10-23T22:01:13.8608749Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+2026-10-23T22:01:13.8609022Z  
+2026-10-23T22:01:13.8609599Z  waiting for server to start....2026-10-23 22:00:46.485 UTC [48] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-10-23T22:01:13.8610365Z  2026-10-23 22:00:46.486 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-23T22:01:13.8610855Z  2026-10-23 22:00:46.488 UTC [51] LOG:  database system was shut down at 2026-10-23 22:00:46 UTC
+2026-10-23T22:01:13.8611299Z  2026-10-23 22:00:46.491 UTC [48] LOG:  database system is ready to accept connections
+2026-10-23T22:01:13.8611626Z   done
+2026-10-23T22:01:13.8611807Z  server started
+2026-10-23T22:01:13.8612305Z  CREATE DATABASE
+2026-10-23T22:01:13.8612488Z  
+2026-10-23T22:01:13.8612648Z  
+2026-10-23T22:01:13.8612927Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2026-10-23T22:01:13.8613273Z  
+2026-10-23T22:01:13.8613587Z  waiting for server to shut down...2026-10-23 22:00:46.649 UTC [48] LOG:  received fast shutdown request
+2026-10-23T22:01:13.8614284Z  .2026-10-23 22:00:46.649 UTC [48] LOG:  aborting any active transactions
+2026-10-23T22:01:13.8614900Z  2026-10-23 22:00:46.651 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+2026-10-23T22:01:13.8615375Z  2026-10-23 22:00:46.652 UTC [49] LOG:  shutting down
+2026-10-23T22:01:13.8615901Z  2026-10-23 22:00:46.652 UTC [49] LOG:  checkpoint starting: shutdown immediate
+2026-10-23T22:01:13.8616810Z  2026-10-23 22:00:46.729 UTC [49] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.066 s, sync=0.011 s, total=0.077 s; sync files=301, longest=0.010 s, average=0.001 s; distance=4255 kB, estimate=4255 kB; lsn=0/1912118, redo lsn=0/1912118
+2026-10-23T22:01:13.8617759Z  2026-10-23 22:00:46.735 UTC [48] LOG:  database system is shut down
+2026-10-23T22:01:13.8618052Z   done
+2026-10-23T22:01:13.8618238Z  server stopped
+2026-10-23T22:01:13.8618422Z  
+2026-10-23T22:01:13.8618638Z  PostgreSQL init process complete; ready for start up.
+2026-10-23T22:01:13.8618912Z  
+2026-10-23T22:01:13.8627964Z Stop and remove container: 9da83b7f5ca644bfb694eda49816a7a5_pgvectorpgvectorpg16_3f8a4d
+2026-10-23T22:01:13.8631918Z ##[command]/usr/bin/docker rm --force 8817553143a104a83553d40d811990fd11b1821f4b068ca08e4105ef71efe28c
+2026-10-23T22:01:13.9643703Z 8817553143a104a83553d40d811990fd11b1821f4b068ca08e4105ef71efe28c
+2026-10-23T22:01:13.9673811Z Remove container network: github_network_5a8dff0df2ec4b6c848e3ac5498fa685
+2026-10-23T22:01:13.9676727Z ##[command]/usr/bin/docker network rm github_network_5a8dff0df2ec4b6c848e3ac5498fa685
+2026-10-23T22:01:14.0218330Z github_network_5a8dff0df2ec4b6c848e3ac5498fa685
+2026-10-23T22:01:14.0288174Z Cleaning up orphan processes
+2026-10-23T22:01:14.0642424Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

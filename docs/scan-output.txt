@@ -1,6 +1,5 @@
-npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
 > buildzn-permission-aware-knowledge-search@0.1.0 scan
 > node scripts/scan.mjs
 
-Scanned 37 tracked files and 61 historical blobs: no configured credential patterns or env files. Synthetic fixtures reviewed separately. This pattern scan is not proof of absence.
+Scanned 38 tracked files and 66 historical blobs: no configured credential patterns or env files. Synthetic fixtures reviewed separately. This pattern scan is not proof of absence.

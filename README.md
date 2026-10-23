@@ -1,4 +1,4 @@
-# Work in progress: Permission aware knowledge search
+# Permission aware knowledge search
 
 Synthetic BuildZn portfolio project. Mock Drive, Slack and Notion connectors provide document chunks and current source ACL metadata. PostgreSQL applies access checks inside the pgvector retrieval query before ranking and LIMIT. A model receives only that query's permitted chunks.
 
@@ -18,7 +18,7 @@ flowchart TD
 Node 24 and Docker Compose:
 
 ```sh
-git clone <repository-url>
+git clone https://github.com/umair24171/permission-aware-knowledge-search.git
 cd permission-aware-knowledge-search
 docker compose up -d db
 npm ci
@@ -46,4 +46,8 @@ This uses an equivalent access predicate inside the database query, not RLS. A c
 
 Authorization is evaluated at query time. Revocation cannot retract context already sent to a model. Queries read current ACLs separately from versioned content; changed content is hidden until reindexed. Recursive tree checks are exact for these fixtures but not optimized for large trees. Hash embeddings are a cheap lexical baseline with collisions and no semantic-language guarantees. Claude answer generation is optional and untested against a live endpoint. Citation and hallucination behavior outside the mock remain unmeasured.
 
-No secrets or real customer content are included. No UI or deployment. Native pgvector CI, public repository and clean-clone Docker checks remain blocked; see docs/BLOCKERS.md, docs/PLAN.md and docs/ASSUMPTIONS.md.
+No secrets or real customer content are included. No UI or deployment. Native pgvector, public repository and clean-checkout Docker checks passed; see docs/BLOCKERS.md, docs/PLAN.md and docs/ASSUMPTIONS.md.
+
+## Verified native CI
+
+[Public source](https://github.com/umair24171/permission-aware-knowledge-search) and [successful Actions run](https://github.com/umair24171/permission-aware-knowledge-search/actions/runs/40030755414), code commit `88b632a9606d4042c304839780e8179cc747d726`. Native PostgreSQL: 24 discovered, 24 passed, 0 environment-specific skipped, zero failed. Embedded complement: 24 passed, 0 environment-specific skipped, zero failed. All 24 distinct cases executed successfully in at least one appropriate environment. Docker Compose built and ran the demo from the runner’s fresh checkout. No hosting deployment. Real logs: docs/native-ci-output.txt.

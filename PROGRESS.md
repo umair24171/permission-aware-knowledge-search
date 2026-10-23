@@ -1,11 +1,11 @@
 # Progress
 
-Done: plan, mock Drive/Slack/Notion connectors, current source ACL and membership tables, pgvector index, SQL access filter before ranking, nested folder semantics, revocable link capabilities, stale-content checks, mock/Claude answer interface, leak suite, quality eval, recorded demo, Docker/CI definitions.
+Done: scoped implementation, plan/assumptions, unit/integration/adversarial edge-case tests, synthetic seeded demo, README/architecture/tradeoffs, public GitHub publication and checkpoint history, topics/description, dependency/format/type checks, full-history configured secret scan, native PostgreSQL Actions verification and fresh-checkout Docker Compose demo.
 
-Results: TypeScript passed; 24 tests passed with 0 failed or skipped; 1,728 synthetic user/query leak pairs, 0 unauthorized chunks; 5-query quality recall@3=1 and MRR=1. Embedded pgvector initialization was fixed, with no weakened tests.
+Measured: 24 distinct tests. Native 24 passed/0 environment-specific skipped; embedded 24 passed/0 environment-specific skipped; zero failures. Every distinct case passed in an appropriate environment. [CI evidence](https://github.com/umair24171/permission-aware-knowledge-search/actions/runs/40030755414), code `88b632a9606d4042c304839780e8179cc747d726`.
 
-Running: none at checkpoint.
+Running: no background worker intentionally left running.
 
-Next: publish new repo when creation/auth becomes available, native pgvector Actions run and clean-clone Docker demo. See docs/BLOCKERS.md. Work in progress, not ready for portfolio claims. Continue to project 4 under blocker rule. Nothing deployed, no existing repo modified.
+Next: include the verified project in the BuildZn portfolio PR after all four projects pass their gates. No deployment or merge. Keep production/model limitations explicit.
 
-Fresh local git clone verified: npm ci, formatting, TypeScript, embedded PostgreSQL tests and demo passed. Working tree remained clean. Evidence: docs/clean-clone-output.txt. Native Docker and GitHub Actions gates remain unverified.
+Original host-only limitations were resolved using scoped GitHub access and hosted Actions, with no new credential or paid service. Original local checkpoint hashes are preserved in remote commit messages.
