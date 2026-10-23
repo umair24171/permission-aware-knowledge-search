@@ -1,0 +1,79 @@
+Cloning into '/workspace/scratch/6cff42f61b37/verification-clones/permission-aware-knowledge-search'...
+done.
+86079e3117acdcb9eed34c9e2dfdf7392aafea79
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+added 25 packages in 571ms
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> buildzn-permission-aware-knowledge-search@0.1.0 format:check
+> prettier --check src tests scripts *.json *.yml .github/workflows/*.yml *.md docs/*.md
+
+Checking formatting...
+All matched files use Prettier code style!
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> buildzn-permission-aware-knowledge-search@0.1.0 build
+> tsc --noEmit
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> buildzn-permission-aware-knowledge-search@0.1.0 test
+> node --import tsx --test --test-concurrency=1 tests/*.test.ts
+
+{"leakPairs":1728,"unauthorizedChunks":0,"data":"synthetic"}
+{"recallAt3":1,"mrr":1}
+✔ 01 group removal revokes access without reindex (1004.124011ms)
+✔ 02 deleted document hidden immediately (39.122345ms)
+✔ 02 deleted ancestor hides descendants (38.126743ms)
+✔ 02 move document inherits new folder access (44.068197ms)
+✔ 03 link capability required, guessed capability denied and valid capability works (39.974892ms)
+✔ 04 nested inheritance grants access at two folder levels (35.982146ms)
+✔ 04 inheritance boundary cuts parent grants (43.137362ms)
+✔ 05 no access returns empty chunks without calling provider (34.823548ms)
+✔ 06 near duplicate permission sets do not leak private appendix (36.536723ms)
+✔ 07 direct grant revoked after indexing (35.804838ms)
+✔ 07 link revoked after indexing (34.224875ms)
+✔ 08 prompt injection cannot change authenticated principal or SQL predicate (32.899323ms)
+✔ 09 SQL injection in user/query has no authority (37.350301ms)
+✔ 09 invalid limit 0 rejected (30.651532ms)
+✔ 09 invalid limit -1 rejected (31.249976ms)
+✔ 09 invalid limit 21 rejected (30.21938ms)
+✔ 09 invalid limit 1.5 rejected (29.964797ms)
+✔ 09 invalid limit NaN rejected (32.673002ms)
+✔ 09 cyclic and cross-connector moves rejected (35.79899ms)
+✔ 10 source version change hides stale index until reindex (38.163226ms)
+✔ 10 deleted ancestor denies descendants beyond inheritance boundary (40.527876ms)
+✔ 11 Cartesian leak suite checks 1728 user/query pairs across ACL changes (2577.566169ms)
+✔ 12 retrieval quality eval uses accessible topical labels (41.296323ms)
+✔ unit hash embeddings deterministic and nonzero (28.731072ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4755.041717
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> buildzn-permission-aware-knowledge-search@0.1.0 demo
+> node --import tsx src/demo.ts
+
+All documents, users and ACLs are synthetic.
+Bob before revoke: [ 'deploy', 'leave-policy' ]
+Bob after revoke: [ 'leave-policy' ]
+Outsider restricted prompt: { text: 'No accessible evidence.', chunks: [] }
+Carol refund evidence: {
+  text: '[refund-policy] Refund policy: delivered orders can receive refunds within thirty days, maximum fifty dollars.',
+  chunks: [
+    {
+      id: 'refund-policy:0',
+      node: 'refund-policy',
+      body: 'Refund policy: delivered orders can receive refunds within thirty days, maximum fifty dollars.',
+      distance: 0.6077677297236319
+    }
+  ]
+}
+
+Fresh local clone checks passed. Embedded PostgreSQL only; Docker and native CI not run. Working tree clean.
